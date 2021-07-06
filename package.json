@@ -7,18 +7,19 @@
   "author": "Anatoliy Yastreb",
   "license": "MIT",
   "scripts": {
-    "start": "node server.js"
+    "start": "pm2 start server.js"
   },
   "dependencies": {
     "basic-auth": "^2.0.1",
     "express": "4.17.1",
-    "gif2webp-bin": "^3.0.1",
+    "gif2webp-bin": "^3.0.2",
     "is-animated": "^2.0.1",
     "lodash": "^4.17.20",
+    "pm2": "^5.1.0",
     "request": "^2.88.0",
-    "sharp": "^0.27.1"
+    "sharp": "^0.28.3"
   },
   "engines": {
-    "node": "^10.12.0"
+    "node": "^12.13.0"
   }
 }
