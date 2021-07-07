@@ -10,7 +10,6 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "basic-auth": "^2.0.1",
     "express": "4.17.1",
     "gif2webp-bin": "^3.0.2",
     "is-animated": "^2.0.1",
