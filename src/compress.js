@@ -17,7 +17,8 @@ function compress(req, res, input) {
                 .toFormat(format)
                 .toBuffer((err, output, info) => {
                     if (err || !info || res.headersSent) return redirect(req, res)
-
+                    
+                    console.log('Animated image converted!')
                     setResponseHeaders(info, format)
                     res.write(output)
                     res.end()
@@ -38,7 +39,8 @@ function compress(req, res, input) {
                 })
                 .toBuffer((err, output, info) => {
                     if (err || !info || res.headersSent) return redirect(req, res)
-
+                    
+                    console.log('Image converted!')
                     setResponseHeaders(info, format)
                     res.write(output)
                     res.end()
