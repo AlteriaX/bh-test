@@ -3,7 +3,7 @@ const redirect = require('./redirect')
 const isAnimated = require('is-animated')
 
 function compress(req, res, input) {
-    const format = req.params.webp ? 'webp' : 'jpeg'
+    const format = 'webp'
     const originType = req.params.originType
     const logging = false
   
@@ -12,10 +12,8 @@ function compress(req, res, input) {
         
         image
             .metadata(function(err, metadata) {
-                var compressionQuality = req.params.quality;
-                
                 sharp(input, { animated: true })
-                .toFormat(format)
+                .toFormat(format, { quality: 90 })
                 .toBuffer((err, output, info) => {
                     if (err || !info || res.headersSent) return redirect(req, res)
                     
@@ -30,15 +28,9 @@ function compress(req, res, input) {
         const image = sharp(input);
         
         image
-            .metadata(function(err, metadata) {
-                var compressionQuality = req.params.quality;
-                
+            .metadata(function(err, metadata) {                
                 sharp(input)
-                .toFormat(format, {
-                    quality: compressionQuality,
-                    progressive: true,
-                    optimizeScans: true
-                })
+                .toFormat(format, { quality: 90 })
                 .toBuffer((err, output, info) => {
                     if (err || !info || res.headersSent) return redirect(req, res)
                     
