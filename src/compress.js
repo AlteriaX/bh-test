@@ -5,6 +5,7 @@ const isAnimated = require('is-animated')
 function compress(req, res, input) {
     const format = req.params.webp ? 'webp' : 'jpeg'
     const originType = req.params.originType
+    const logging = false
   
     if (format === 'webp' && (originType.endsWith('gif') || originType.endsWith('png') || originType.endsWith('apng')) && isAnimated(input)) {
         const image = sharp(input);
@@ -19,6 +20,7 @@ function compress(req, res, input) {
                     if (err || !info || res.headersSent) return redirect(req, res)
                     
                     console.log('Animated image converted!')
+                    if(!logging) return
                     setResponseHeaders(info, format)
                     res.write(output)
                     res.end()
@@ -41,6 +43,7 @@ function compress(req, res, input) {
                     if (err || !info || res.headersSent) return redirect(req, res)
                     
                     console.log('Image converted!')
+                    if(!logging) return
                     setResponseHeaders(info, format)
                     res.write(output)
                     res.end()
