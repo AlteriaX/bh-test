@@ -6,39 +6,23 @@ function compress(req, res, input) {
     const format = 'webp'
     const originType = req.params.originType
 
-    if (format === 'webp' && (originType.endsWith('gif') || originType.endsWith('png') || originType.endsWith('apng')) && isAnimated(input)) {
-        const image = sharp(input);
-        
-        image
-            .metadata(function(err, metadata) {
-                sharp(input, { animated: true })
-                .toFormat(format, { quality: 90 })
-                .toBuffer((err, output, info) => {
-                    if (err || !info || res.headersSent) return redirect(req, res)
-                    
-                    console.log('Animated image converted!')
-                    setResponseHeaders(info, format)
-                    res.write(output)
-                    res.end()
-                })
+    const image = sharp(input);
+    
+    image
+        .metadata(function(err, metadata) {
+            sharp(input, { animated: (originType.endsWith('gif') || originType.endsWith('png') || originType.endsWith('apng')) && isAnimated(input) ? true : false })
+            .toFormat(format, { quality: 90 })
+            .toBuffer((err, output, info) => {
+                if (err || !info || res.headersSent) return redirect(req, res)
+                   
+                if (format === 'webp' && (originType.endsWith('gif') || originType.endsWith('png') || originType.endsWith('apng')) && isAnimated(input)) console.log('Animated image converted!')
+                    else console.log('Image converted!')
+                   
+                setResponseHeaders(info, format)
+                res.write(output)
+                res.end()
             })
-    } else {
-        const image = sharp(input);
-        
-        image
-            .metadata(function(err, metadata) {
-                sharp(input)
-                .toFormat(format, { quality: 90 })
-                .toBuffer((err, output, info) => {
-                    if (err || !info || res.headersSent) return redirect(req, res)
-                    
-                    console.log('Image converted!')
-                    setResponseHeaders(info, format)
-                    res.write(output)
-                    res.end()
-                })
-            })
-    }
+        })
     
     function setResponseHeaders (info, imgFormat){
         res.setHeader('content-type', `image/${imgFormat}`)
