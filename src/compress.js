@@ -13,7 +13,7 @@ function compress(req, res, input) {
             .metadata(function(err, metadata) {
                 var compressionQuality = req.params.quality;
                 
-                sharp(input, , { animated: true })
+                sharp(input, { animated: true })
                 .toFormat(format)
                 .toBuffer((err, output, info) => {
                     if (err || !info || res.headersSent) return redirect(req, res)
