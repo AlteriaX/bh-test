@@ -7,7 +7,7 @@
   "author": "Anatoliy Yastreb",
   "license": "MIT",
   "scripts": {
-    "start": "pm2-runtime start server.js"
+    "start": "pm2-runtime start server.js --max-memory-restart 460M"
   },
   "dependencies": {
     "express": "4.17.1",
