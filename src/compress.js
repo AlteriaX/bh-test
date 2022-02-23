@@ -5,7 +5,7 @@ const isAnimated = require('is-animated')
 function compress(req, res, input) {
 
     sharp(input, { animated: isAnimated(input) ? true : false })
-        .toFormat('webp', { quality: isAnimated(input) ? 80 : 90 })
+        .toFormat('webp', { quality: 90 })
         .toBuffer((err, output, info) => {
             if (err || !info || res.headersSent) return redirect(req, res)
 
