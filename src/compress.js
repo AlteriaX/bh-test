@@ -4,6 +4,8 @@ const isAnimated = require('is-animated')
 
 function compress(req, res, input) {
 
+    const format = req.params.webp ? 'webp' : 'jpeg'
+    
     sharp(input, { animated: isAnimated(input) ? true : false })
         .toFormat('webp', { quality: 90 })
         .toBuffer((err, output, info) => {
