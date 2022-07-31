@@ -7,9 +7,8 @@ function shouldCompress(req, buffer) {
     if (!originType.startsWith('image')) return false
     if (originSize === 0) return false
     if (webp && originSize < MIN_COMPRESS_LENGTH) return false
-    if (!webp && (originType.endsWith('png') || originType.endsWith('apng') || originType.endsWith('gif')) && originSize < MIN_TRANSPARENT_COMPRESS_LENGTH) {
-        return false
-    }
+    if (originType.endsWith('apng') || originType.endsWith('gif')) return false
+    if (!webp && originType.endsWith('png') && originSize < MIN_TRANSPARENT_COMPRESS_LENGTH) return false
 
     return true
 }
