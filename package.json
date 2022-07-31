@@ -10,11 +10,11 @@
     "start": "pm2-runtime start server.js --max-memory-restart 460M"
   },
   "dependencies": {
-    "express": "^4.17.3",
+    "express": "^4.18.1",
     "is-animated": "^2.0.2",
     "lodash": "^4.17.21",
     "request": "^2.88.2",
-    "sharp": "^0.30.1",
+    "sharp": "^0.30.7",
     "pm2": "^5.2.0"
   },
   "engines": {
