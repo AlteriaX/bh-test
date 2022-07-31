@@ -7,7 +7,6 @@ const bypass = require('./bypass')
 const copyHeaders = require('./copyHeaders')
 
 function proxy(req, res) {
-    var isMediaStream
   request.get(
     req.params.url,
     {
@@ -27,19 +26,15 @@ function proxy(req, res) {
     (err, origin, buffer) => {
       if (err || origin.statusCode >= 400) return redirect(req, res)
 
-      if(!isMediaStream){
-        copyHeaders(origin, res)
-        res.setHeader('content-encoding', 'identity')
-        let originType = origin.headers['content-type'] || ''
-        req.params.originType = originType
-        req.params.originSize = buffer.length
+      copyHeaders(origin, res)
+      res.setHeader('content-encoding', 'identity')
+      req.params.originType = origin.headers['content-type'] || ''
+      req.params.originSize = buffer.length
 
-        if (shouldCompress(req, buffer)) {
-            isMediaStream = false
-            compress(req, res, buffer)
-        } else {
-            bypass(req, res, buffer)
-        }
+      if (shouldCompress(req)) {
+        compress(req, res, buffer)
+      } else {
+        bypass(req, res, buffer)
       }
     }
   )
