@@ -7,7 +7,7 @@ function compress(req, res, input) {
     const format = req.params.webp ? 'webp' : 'jpeg'
     
     sharp(input, { animated: isAnimated(input) ? true : false })
-        .webp({ quality: 50, effort: 6, nearLossless: true })
+        .webp({ quality: 85, effort: 6 })
         .toBuffer((err, output, info) => {
             if (err || !info || res.headersSent) return redirect(req, res)
 
